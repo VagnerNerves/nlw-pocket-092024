@@ -6,7 +6,7 @@ export interface GetSummaryResponse {
     {
       id: string
       title: string
-      createdAt: string
+      completedAt: string
     }[]
   >
 }

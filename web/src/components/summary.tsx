@@ -87,7 +87,7 @@ export function Summary() {
 
               <ul className="flex flex-col gap-3">
                 {goals.map(goal => {
-                  const parsedTime = dayjs(goal.createdAt).format('HH:mm[h]')
+                  const parsedTime = dayjs(goal.completedAt).format('HH:mm[h]')
 
                   return (
                     <li key={goal.id} className="flex items-center gap-2">
