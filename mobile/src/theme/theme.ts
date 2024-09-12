@@ -32,9 +32,11 @@ export const THEME = {
     INTER_MEDIUM: 'Inter_500Medium',
     INTER_SEMIBOLD: 'Inter_600SemiBold',
     SIZE: {
+      XS: 12,
       SM: 14,
       BASE: 16,
       LG: 18,
+      XL: 20,
     },
   },
 } as const
