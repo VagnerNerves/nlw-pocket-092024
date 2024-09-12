@@ -15,9 +15,9 @@ import {
 } from '@expo-google-fonts/inter'
 import { useEffect } from 'react'
 
-import { THEME } from '@/src/theme/theme'
+import { THEME } from '@/theme/theme'
 
-import { Loading } from '@/src/components/Loading'
+import { Loading } from '@/components/ui/Loading'
 
 SplashScreen.preventAutoHideAsync()
 

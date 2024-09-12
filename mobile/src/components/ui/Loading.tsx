@@ -5,7 +5,7 @@ import {
   type ViewProps,
 } from 'react-native'
 
-import { THEME } from '@/src/theme/theme'
+import { THEME } from '@/theme/theme'
 
 type LoadingProps = {
   color?: ColorValue
