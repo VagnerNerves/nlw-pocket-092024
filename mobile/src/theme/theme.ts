@@ -14,6 +14,7 @@ export const THEME = {
     PINK: {
       400: '#F472B6',
       500: '#EC4899',
+      970: '#150d12',
     },
     VIOLET: {
       50: '#F5F3FF',
