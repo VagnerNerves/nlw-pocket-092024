@@ -1,6 +1,6 @@
 import { THEME } from '@/theme/theme'
 import { Circle, CircleCheck } from 'lucide-react-native'
-import { Text, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 
 type CheckProps = {
   isCheck: boolean
@@ -12,10 +12,13 @@ type CheckProps = {
     | 'tongue-out'
     | 'incredible'
     | 'out-of-the-curve'
+
+  onPress: () => void
 }
-export function Check({ isCheck, text, icon }: CheckProps) {
+export function Check({ isCheck, text, icon, onPress }: CheckProps) {
   return (
-    <View
+    <TouchableOpacity
+      onPress={onPress}
       style={{
         width: '100%',
         flexDirection: 'row',
@@ -72,6 +75,6 @@ export function Check({ isCheck, text, icon }: CheckProps) {
       ) : (
         <View style={{ width: 18 }} />
       )}
-    </View>
+    </TouchableOpacity>
   )
 }
