@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { View } from 'react-native'
 
 import { SplashScreen, Stack } from 'expo-router'
@@ -7,13 +8,14 @@ import {
   type Theme,
 } from '@react-navigation/native'
 
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
+
 import {
   useFonts,
   Inter_400Regular,
   Inter_500Medium,
   Inter_600SemiBold,
 } from '@expo-google-fonts/inter'
-import { useEffect } from 'react'
 
 import { THEME } from '@/theme/theme'
 
@@ -36,6 +38,8 @@ export default function layout() {
     },
   }
 
+  const queryClient = new QueryClient()
+
   useEffect(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync()
@@ -44,13 +48,15 @@ export default function layout() {
 
   return (
     <ThemeProvider value={themeProvider}>
-      <View style={{ flex: 1, backgroundColor: THEME.COLORS.ZINC[950] }}>
-        {fontsLoaded ? (
-          <Stack screenOptions={{ headerShown: false }} />
-        ) : (
-          <Loading />
-        )}
-      </View>
+      <QueryClientProvider client={queryClient}>
+        <View style={{ flex: 1, backgroundColor: THEME.COLORS.ZINC[950] }}>
+          {fontsLoaded ? (
+            <Stack screenOptions={{ headerShown: false }} />
+          ) : (
+            <Loading />
+          )}
+        </View>
+      </QueryClientProvider>
     </ThemeProvider>
   )
 }
