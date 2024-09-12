@@ -19,6 +19,12 @@ export const THEME = {
       50: '#F5F3FF',
       500: '#8B5CF6',
     },
+    RED: {
+      300: '#fca5a5',
+      500: '#ef4444',
+    },
+    BLACK: '#000000',
+    WHITE: '#FFFFFF',
   },
   FONTS: {
     INTER_REGULAR: 'Inter_400Regular',
