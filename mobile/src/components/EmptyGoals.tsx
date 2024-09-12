@@ -1,5 +1,7 @@
 import { Text, View } from 'react-native'
 
+import { useRouter } from 'expo-router'
+
 import LogoSVG from '@/assets/logo-in-orbit.svg'
 import LetStartIllustrationSVG from '@/assets/lets-start-illustration.svg'
 
@@ -7,6 +9,8 @@ import { THEME } from '@/theme/theme'
 import { Button } from '@/components/ui/Button'
 
 export function EmptyGoals() {
+  const router = useRouter()
+
   return (
     <View
       style={{
@@ -14,7 +18,7 @@ export function EmptyGoals() {
         alignItems: 'center',
         justifyContent: 'center',
         gap: 32,
-        paddingHorizontal: 8,
+        paddingHorizontal: 16,
         paddingVertical: 32,
       }}
     >
@@ -47,7 +51,10 @@ export function EmptyGoals() {
         <Button
           text="Cadastrar meta"
           icon="plus"
-          buttonProps={{ style: { width: 'auto' } }}
+          buttonProps={{
+            style: { width: 'auto' },
+            onPress: () => router.navigate('/creategoal'),
+          }}
         />
       </View>
     </View>
