@@ -27,6 +27,7 @@ export const THEME = {
     SIZE: {
       SM: 14,
       BASE: 16,
+      LG: 18,
     },
   },
 } as const
