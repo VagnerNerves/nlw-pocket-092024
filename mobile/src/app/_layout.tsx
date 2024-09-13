@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { View } from 'react-native'
+import { StatusBar, View } from 'react-native'
 
 import { SplashScreen, Stack } from 'expo-router'
 import {
@@ -48,6 +48,12 @@ export default function layout() {
 
   return (
     <ThemeProvider value={themeProvider}>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
+
       <QueryClientProvider client={queryClient}>
         <View style={{ flex: 1, backgroundColor: THEME.COLORS.ZINC[950] }}>
           {fontsLoaded ? (

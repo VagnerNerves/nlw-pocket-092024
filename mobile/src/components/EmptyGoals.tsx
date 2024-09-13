@@ -1,4 +1,5 @@
 import { Text, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { useRouter } from 'expo-router'
 
@@ -11,6 +12,8 @@ import { Button } from '@/components/ui/Button'
 export function EmptyGoals() {
   const router = useRouter()
 
+  const insets = useSafeAreaInsets()
+
   return (
     <View
       style={{
@@ -19,7 +22,8 @@ export function EmptyGoals() {
         justifyContent: 'center',
         gap: 32,
         paddingHorizontal: 16,
-        paddingVertical: 32,
+        paddingTop: 16 + insets.top,
+        paddingBottom: 16 + insets.bottom,
       }}
     >
       <LogoSVG />

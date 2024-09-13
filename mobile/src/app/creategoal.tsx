@@ -1,4 +1,11 @@
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import {
+  ScrollView,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { useRouter } from 'expo-router'
 
@@ -30,6 +37,8 @@ type CreateGoalSchema = z.infer<typeof createGoalForm>
 export default function CreateGoal() {
   const router = useRouter()
 
+  const insets = useSafeAreaInsets()
+
   const queryClient = useQueryClient()
 
   const {
@@ -59,155 +68,164 @@ export default function CreateGoal() {
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        paddingHorizontal: 16,
-        paddingVertical: 32,
-      }}
-    >
+    <>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
+
       <View
         style={{
-          width: '100%',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          flex: 1,
+          paddingHorizontal: 16,
+          paddingTop: 16 + insets.top,
+          paddingBottom: 16 + insets.bottom,
         }}
       >
-        <TouchableOpacity onPress={() => router.back()}>
-          <ChevronLeft size={28} color={THEME.COLORS.ZINC[600]} />
-        </TouchableOpacity>
-        <Text
-          style={{
-            fontFamily: THEME.FONTS.INTER_SEMIBOLD,
-            fontSize: THEME.FONTS.SIZE.LG,
-            color: THEME.COLORS.ZINC[50],
-          }}
-        >
-          Cadastrar meta
-        </Text>
-        <View style={{ width: 28 }} />
-      </View>
-
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View
           style={{
             width: '100%',
-            gap: 24,
-            paddingVertical: 12,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
           }}
         >
+          <TouchableOpacity onPress={() => router.back()}>
+            <ChevronLeft size={28} color={THEME.COLORS.ZINC[600]} />
+          </TouchableOpacity>
           <Text
             style={{
-              fontFamily: THEME.FONTS.INTER_REGULAR,
-              fontSize: THEME.FONTS.SIZE.SM,
-              color: THEME.COLORS.ZINC[400],
+              fontFamily: THEME.FONTS.INTER_SEMIBOLD,
+              fontSize: THEME.FONTS.SIZE.LG,
+              color: THEME.COLORS.ZINC[50],
             }}
           >
-            Adicione atividades que{' '}
-            <Text style={{ textDecorationLine: 'underline' }}>
-              te fazem bem
-            </Text>{' '}
-            e que você quer continuar praticando toda semana.
+            Cadastrar meta
           </Text>
-
-          <View style={{ width: '100%', gap: 8 }}>
-            <Text
-              style={{
-                fontFamily: THEME.FONTS.INTER_MEDIUM,
-                fontSize: THEME.FONTS.SIZE.SM,
-                color: THEME.COLORS.ZINC[100],
-              }}
-            >
-              Qual a atividade?
-            </Text>
-
-            <Controller
-              control={control}
-              name="title"
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Input
-                  inputProps={{
-                    placeholder: 'Praticar exercícios, meditar, etc...',
-                    onBlur: onBlur,
-                    onChangeText: onChange,
-                    value: value,
-                  }}
-                  errorMessage={errors.title?.message}
-                />
-              )}
-            />
-          </View>
-
-          <View style={{ width: '100%', gap: 8 }}>
-            <Text
-              style={{
-                fontFamily: THEME.FONTS.INTER_MEDIUM,
-                fontSize: THEME.FONTS.SIZE.SM,
-                color: THEME.COLORS.ZINC[100],
-              }}
-            >
-              Quantas vezes na semana?
-            </Text>
-
-            <Controller
-              control={control}
-              name="desiredWeeklyFrequency"
-              defaultValue={3}
-              render={({ field: { onChange, value } }) => (
-                <>
-                  <Check
-                    onPress={() => onChange(1)}
-                    isCheck={value === 1}
-                    text="1x na semana"
-                    icon="sleepy"
-                  />
-                  <Check
-                    onPress={() => onChange(2)}
-                    isCheck={value === 2}
-                    text="2x na semana"
-                    icon="smile"
-                  />
-                  <Check
-                    onPress={() => onChange(3)}
-                    isCheck={value === 3}
-                    text="3x na semana"
-                    icon="glasses"
-                  />
-                  <Check
-                    onPress={() => onChange(4)}
-                    isCheck={value === 4}
-                    text="4x na semana"
-                    icon="tongue-out"
-                  />
-                  <Check
-                    onPress={() => onChange(5)}
-                    isCheck={value === 5}
-                    text="5x na semana"
-                    icon="incredible"
-                  />
-                  <Check
-                    onPress={() => onChange(6)}
-                    isCheck={value === 6}
-                    text="6x na semana"
-                    icon="out-of-the-curve"
-                  />
-                  <Check
-                    onPress={() => onChange(7)}
-                    isCheck={value === 7}
-                    text="Todos dias da semana"
-                  />
-                </>
-              )}
-            />
-          </View>
-
-          <Button
-            text="Salvar"
-            buttonProps={{ onPress: handleSubmit(handleCreateGoal) }}
-          />
+          <View style={{ width: 28 }} />
         </View>
-      </ScrollView>
-    </View>
+
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <View
+            style={{
+              width: '100%',
+              gap: 24,
+              paddingVertical: 12,
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: THEME.FONTS.INTER_REGULAR,
+                fontSize: THEME.FONTS.SIZE.SM,
+                color: THEME.COLORS.ZINC[400],
+              }}
+            >
+              Adicione atividades que{' '}
+              <Text style={{ textDecorationLine: 'underline' }}>
+                te fazem bem
+              </Text>{' '}
+              e que você quer continuar praticando toda semana.
+            </Text>
+
+            <View style={{ width: '100%', gap: 8 }}>
+              <Text
+                style={{
+                  fontFamily: THEME.FONTS.INTER_MEDIUM,
+                  fontSize: THEME.FONTS.SIZE.SM,
+                  color: THEME.COLORS.ZINC[100],
+                }}
+              >
+                Qual a atividade?
+              </Text>
+
+              <Controller
+                control={control}
+                name="title"
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <Input
+                    inputProps={{
+                      placeholder: 'Praticar exercícios, meditar, etc...',
+                      onBlur: onBlur,
+                      onChangeText: onChange,
+                      value: value,
+                    }}
+                    errorMessage={errors.title?.message}
+                  />
+                )}
+              />
+            </View>
+
+            <View style={{ width: '100%', gap: 8 }}>
+              <Text
+                style={{
+                  fontFamily: THEME.FONTS.INTER_MEDIUM,
+                  fontSize: THEME.FONTS.SIZE.SM,
+                  color: THEME.COLORS.ZINC[100],
+                }}
+              >
+                Quantas vezes na semana?
+              </Text>
+
+              <Controller
+                control={control}
+                name="desiredWeeklyFrequency"
+                defaultValue={3}
+                render={({ field: { onChange, value } }) => (
+                  <>
+                    <Check
+                      onPress={() => onChange(1)}
+                      isCheck={value === 1}
+                      text="1x na semana"
+                      icon="sleepy"
+                    />
+                    <Check
+                      onPress={() => onChange(2)}
+                      isCheck={value === 2}
+                      text="2x na semana"
+                      icon="smile"
+                    />
+                    <Check
+                      onPress={() => onChange(3)}
+                      isCheck={value === 3}
+                      text="3x na semana"
+                      icon="glasses"
+                    />
+                    <Check
+                      onPress={() => onChange(4)}
+                      isCheck={value === 4}
+                      text="4x na semana"
+                      icon="tongue-out"
+                    />
+                    <Check
+                      onPress={() => onChange(5)}
+                      isCheck={value === 5}
+                      text="5x na semana"
+                      icon="incredible"
+                    />
+                    <Check
+                      onPress={() => onChange(6)}
+                      isCheck={value === 6}
+                      text="6x na semana"
+                      icon="out-of-the-curve"
+                    />
+                    <Check
+                      onPress={() => onChange(7)}
+                      isCheck={value === 7}
+                      text="Todos dias da semana"
+                    />
+                  </>
+                )}
+              />
+            </View>
+
+            <Button
+              text="Salvar"
+              buttonProps={{ onPress: handleSubmit(handleCreateGoal) }}
+            />
+          </View>
+        </ScrollView>
+      </View>
+    </>
   )
 }

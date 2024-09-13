@@ -1,4 +1,4 @@
-import { ScrollView } from 'react-native'
+import { ScrollView, StatusBar } from 'react-native'
 
 import { useQuery } from '@tanstack/react-query'
 
@@ -20,8 +20,16 @@ export default function Home() {
   }
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      {data?.total && data.total > 0 ? <Summary /> : <EmptyGoals />}
-    </ScrollView>
+    <>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="transparent"
+        translucent
+      />
+
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        {data?.total && data.total > 0 ? <Summary /> : <EmptyGoals />}
+      </ScrollView>
+    </>
   )
 }

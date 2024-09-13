@@ -1,4 +1,5 @@
 import { Text, TouchableOpacity, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { useRouter } from 'expo-router'
 
@@ -23,6 +24,8 @@ dayjs.locale(ptBR)
 
 export function Summary() {
   const router = useRouter()
+
+  const insets = useSafeAreaInsets()
 
   const queryClient = useQueryClient()
 
@@ -54,7 +57,8 @@ export function Summary() {
         flex: 1,
         gap: 24,
         paddingHorizontal: 16,
-        paddingVertical: 32,
+        paddingTop: 16 + insets.top,
+        paddingBottom: 16 + insets.bottom,
       }}
     >
       <View
