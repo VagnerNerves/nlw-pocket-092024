@@ -1,4 +1,6 @@
 import {
+  KeyboardAvoidingView,
+  Platform,
   ScrollView,
   StatusBar,
   Text,
@@ -68,7 +70,12 @@ export default function CreateGoal() {
   }
 
   return (
-    <>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{
+        flex: 1,
+      }}
+    >
       <StatusBar
         barStyle="light-content"
         backgroundColor="transparent"
@@ -106,7 +113,10 @@ export default function CreateGoal() {
           <View style={{ width: 28 }} />
         </View>
 
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="always"
+        >
           <View
             style={{
               width: '100%',
@@ -226,6 +236,6 @@ export default function CreateGoal() {
           </View>
         </ScrollView>
       </View>
-    </>
+    </KeyboardAvoidingView>
   )
 }
