@@ -8,7 +8,7 @@ export interface GetSummaryResponse {
       title: string
       completedAt: string
     }[]
-  >
+  > | null
 }
 
 export async function getSummary(): Promise<GetSummaryResponse> {
