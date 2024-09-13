@@ -30,7 +30,11 @@ I developed the in.orbit project, an application where users can register activi
 
 ## 🎥 Implementation Video
 
-In the GitHub edit, drag the video that it already puts on github itself.
+
+
+https://github.com/user-attachments/assets/519ed9ae-1eb6-4cb0-9da3-8ea3942faba1
+
+
 
 ## 🎨 Layout
 
