@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="200px" alt="Project NLW Pocket - in.orbit" title="Project NLW Pocket - in.orbit" src="logo.svg" />
+  <img width="200px" alt="Project NLW Pocket - in.orbit" title="Project NLW Pocket - in.orbit" src="https://github.com/VagnerNerves/nlw-pocket-092024/blob/main/web/src/assets/logo-in-orbit.svg" />
   
   <h1 align="center">Project NLW Pocket - in.orbit</h1>
 
