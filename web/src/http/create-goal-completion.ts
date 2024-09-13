@@ -1,3 +1,5 @@
+import { env } from '../env'
+
 export interface CreateGoalCompletionRequest {
   goalId: string
 }
@@ -5,7 +7,7 @@ export interface CreateGoalCompletionRequest {
 export async function createGoalCompletion({
   goalId,
 }: CreateGoalCompletionRequest): Promise<void> {
-  const response = await fetch('http://localhost:3333/completions', {
+  const response = await fetch(`${env.VITE_API_URL}/completions`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

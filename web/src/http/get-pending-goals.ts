@@ -1,3 +1,5 @@
+import { env } from '../env'
+
 export interface GetPendingGoalsResponse {
   pendingGoals: {
     id: string
@@ -8,7 +10,7 @@ export interface GetPendingGoalsResponse {
 }
 
 export async function getPendingGoals(): Promise<GetPendingGoalsResponse> {
-  const response = await fetch('http://localhost:3333/pending-goals')
+  const response = await fetch(`${env.VITE_API_URL}/pending-goals`)
   const data = await response.json()
 
   return data
