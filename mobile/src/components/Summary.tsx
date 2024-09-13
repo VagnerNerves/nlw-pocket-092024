@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native'
+import { Text, Touchable, TouchableOpacity, View } from 'react-native'
 
 import { useRouter } from 'expo-router'
 
@@ -7,8 +7,9 @@ import { CircleCheck } from 'lucide-react-native'
 import dayjs from 'dayjs'
 import ptBR from 'dayjs/locale/pt-br'
 
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { getSummary } from '@/http/get-summary'
+import { deleteGoalCompletion } from '@/http/delete-goal-completion'
 
 import LogoSVG from '@/assets/logo.svg'
 
@@ -22,6 +23,8 @@ dayjs.locale(ptBR)
 
 export function Summary() {
   const router = useRouter()
+
+  const queryClient = useQueryClient()
 
   const { data } = useQuery({
     queryKey: ['summary'],
@@ -37,6 +40,13 @@ export function Summary() {
   const lastDayOfWeek = dayjs().endOf('week').format('D MMM')
 
   const completePercentage = Math.round((data?.completed * 100) / data?.total)
+
+  async function handleDeleteCompletion(id: string) {
+    await deleteGoalCompletion({ id })
+
+    queryClient.invalidateQueries({ queryKey: ['pending-goals'] })
+    queryClient.invalidateQueries({ queryKey: ['summary'] })
+  }
 
   return (
     <View
@@ -148,69 +158,99 @@ export function Summary() {
           Sua semana
         </Text>
 
-        {Object.entries(data.goalsPerDay).map(([date, goals]) => {
-          const weekDAy = dayjs(date).format('dddd')
-          const formattedDate = dayjs(date).format('D[ de ]MMMM')
+        {!data.goalsPerDay && (
+          <Text
+            style={{
+              fontFamily: THEME.FONTS.INTER_REGULAR,
+              fontSize: THEME.FONTS.SIZE.SM,
+              color: THEME.COLORS.ZINC[400],
+            }}
+          >
+            Você ainda não completou nenhuma meta essa semana.
+          </Text>
+        )}
 
-          return (
-            <View key={date} style={{ width: '100%', gap: 16 }}>
-              <Text
-                style={{
-                  fontFamily: THEME.FONTS.INTER_MEDIUM,
-                  fontSize: THEME.FONTS.SIZE.BASE,
-                  color: THEME.COLORS.ZINC[50],
-                  textTransform: 'capitalize',
-                }}
-              >
-                {weekDAy}{' '}
+        {data.goalsPerDay &&
+          Object.entries(data.goalsPerDay).map(([date, goals]) => {
+            const weekDAy = dayjs(date).format('dddd')
+            const formattedDate = dayjs(date).format('D[ de ]MMMM')
+
+            return (
+              <View key={date} style={{ width: '100%', gap: 16 }}>
                 <Text
                   style={{
-                    fontFamily: THEME.FONTS.INTER_REGULAR,
-                    fontSize: THEME.FONTS.SIZE.XS,
-                    color: THEME.COLORS.ZINC[400],
+                    fontFamily: THEME.FONTS.INTER_MEDIUM,
+                    fontSize: THEME.FONTS.SIZE.BASE,
+                    color: THEME.COLORS.ZINC[50],
+                    textTransform: 'capitalize',
                   }}
                 >
-                  ({formattedDate})
+                  {weekDAy}{' '}
+                  <Text
+                    style={{
+                      fontFamily: THEME.FONTS.INTER_REGULAR,
+                      fontSize: THEME.FONTS.SIZE.XS,
+                      color: THEME.COLORS.ZINC[400],
+                    }}
+                  >
+                    ({formattedDate})
+                  </Text>
                 </Text>
-              </Text>
 
-              <View style={{ width: '100%', gap: 12 }}>
-                {goals.map(goal => {
-                  const parsedTime = dayjs(goal.completedAt).format('HH:mm[h]')
+                <View style={{ width: '100%', gap: 12 }}>
+                  {goals.map(goal => {
+                    const parsedTime = dayjs(goal.completedAt).format(
+                      'HH:mm[h]'
+                    )
 
-                  return (
-                    <View
-                      key={goal.id}
-                      style={{
-                        flexDirection: 'row',
-                        gap: 8,
-                        alignItems: 'center',
-                      }}
-                    >
-                      <CircleCheck size={16} color={THEME.COLORS.PINK[400]} />
-                      <Text
+                    return (
+                      <View
+                        key={goal.id}
                         style={{
-                          fontFamily: THEME.FONTS.INTER_REGULAR,
-                          fontSize: THEME.FONTS.SIZE.SM,
-                          color: THEME.COLORS.ZINC[400],
+                          flexDirection: 'row',
+                          gap: 8,
+                          alignItems: 'center',
                         }}
                       >
-                        Você completou "
-                        <Text style={{ color: THEME.COLORS.ZINC[100] }}>
-                          {goal.title}
+                        <CircleCheck size={16} color={THEME.COLORS.PINK[400]} />
+                        <Text
+                          style={{
+                            fontFamily: THEME.FONTS.INTER_REGULAR,
+                            fontSize: THEME.FONTS.SIZE.SM,
+                            color: THEME.COLORS.ZINC[400],
+                          }}
+                        >
+                          Você completou "
+                          <Text style={{ color: THEME.COLORS.ZINC[100] }}>
+                            {goal.title}
+                          </Text>
+                          " às{' '}
+                          <Text style={{ color: THEME.COLORS.ZINC[100] }}>
+                            {parsedTime}
+                          </Text>
                         </Text>
-                        " às{' '}
-                        <Text style={{ color: THEME.COLORS.ZINC[100] }}>
-                          {parsedTime}
-                        </Text>
-                      </Text>
-                    </View>
-                  )
-                })}
+
+                        <TouchableOpacity
+                          onPress={() => handleDeleteCompletion(goal.id)}
+                        >
+                          <Text
+                            style={{
+                              fontFamily: THEME.FONTS.INTER_REGULAR,
+                              fontSize: THEME.FONTS.SIZE.XS,
+                              color: THEME.COLORS.ZINC[500],
+                              textDecorationLine: 'underline',
+                            }}
+                          >
+                            Desfazer
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    )
+                  })}
+                </View>
               </View>
-            </View>
-          )
-        })}
+            )
+          })}
       </View>
     </View>
   )
