@@ -1,4 +1,4 @@
-import { Text, Touchable, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 
 import { useRouter } from 'expo-router'
 
